@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { requireAuth } from "../../middleware/auth.middleware.js";
+
 
 import {
     createBooking,
@@ -7,7 +9,7 @@ import {
 
 const router = Router();
 
-router.post("/", createBooking);
+router.post("/", requireAuth, createBooking);
 
 router.get("/:id", getBookingById);
 
