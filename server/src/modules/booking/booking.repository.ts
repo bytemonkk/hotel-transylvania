@@ -1,6 +1,7 @@
 import { prisma } from "../../db/prisma.js";
 
 export const bookingRepository = {
+
     async findRoomById(roomId: number) {
         return prisma.room.findUnique({
             where: {
@@ -17,15 +18,12 @@ export const bookingRepository = {
         return prisma.booking.findFirst({
             where: {
                 roomId,
-
                 status: {
                     in: ["PENDING", "CONFIRMED"],
                 },
-
                 checkIn: {
                     lt: checkOut,
                 },
-
                 checkOut: {
                     gt: checkIn,
                 },
@@ -53,10 +51,34 @@ export const bookingRepository = {
         });
     },
 
+    // General booking lookup
     async findBookingById(id: number) {
         return prisma.booking.findUnique({
             where: {
                 id,
+            },
+            include: {
+                room: true,
+                user: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                    },
+                },
+            },
+        });
+    },
+
+    // Ownership-aware booking lookup
+    async findBookingByIdAndUserId(
+        id: number,
+        userId: number
+    ) {
+        return prisma.booking.findFirst({
+            where: {
+                id,
+                userId,
             },
             include: {
                 room: true,
