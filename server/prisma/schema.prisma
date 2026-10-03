@@ -1,10 +1,16 @@
 generator client {
   provider = "prisma-client"
-  output = "../src/generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+enum UserRole {
+  CUSTOMER
+  OWNER
+  ADMIN
 }
 
 model Room {
@@ -13,7 +19,18 @@ model Room {
   name          String
   description   String?
   capacity      Int
-  pricePerNight Decimal @db.Decimal(10, 2)
+  pricePerNight Decimal  @db.Decimal(10, 2)
   status        String   @default("AVAILABLE")
   createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(CUSTOMER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
