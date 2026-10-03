@@ -1,4 +1,5 @@
 import { Worker } from "bullmq";
+
 import { prisma } from "../db/prisma.js";
 import { sendBookingConfirmationEmail } from "../services/mail.service.js";
 
@@ -64,7 +65,7 @@ const worker = new Worker(
     },
     {
         connection,
-    }
+    },
 );
 
 worker.on("completed", (job) => {
@@ -76,6 +77,38 @@ worker.on("failed", (job, error) => {
         `Job ${job?.id} failed:`,
         error.message,
     );
+});
+
+async function gracefulShutdown(signal: string) {
+    console.log(`\n${signal} received`);
+    console.log("Stopping email worker...");
+
+    try {
+        await worker.close();
+
+        console.log("Email worker closed");
+
+        await prisma.$disconnect();
+
+        console.log("Prisma connection closed");
+
+        process.exit(0);
+    } catch (error) {
+        console.error(
+            "Error during graceful shutdown:",
+            error,
+        );
+
+        process.exit(1);
+    }
+}
+
+process.on("SIGINT", () => {
+    void gracefulShutdown("SIGINT");
+});
+
+process.on("SIGTERM", () => {
+    void gracefulShutdown("SIGTERM");
 });
 
 console.log("Email worker started");

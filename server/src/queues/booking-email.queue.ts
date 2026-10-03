@@ -8,14 +8,5 @@ export async function queueBookingConfirmation(data: {
         {
             bookingId: data.bookingId,
         },
-        {
-            attempts: 3,
-            backoff: {
-                type: "exponential",
-                delay: 5000,
-            },
-            removeOnComplete: true,
-            removeOnFail: false,
-        }
     );
 }

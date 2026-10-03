@@ -1,4 +1,5 @@
 import { bookingRepository } from "./booking.repository.js";
+
 import { queueBookingConfirmation } from "../../queues/booking-email.queue.js";
 
 export const bookingService = {
@@ -17,7 +18,9 @@ export const bookingService = {
             throw new Error("INVALID_GUEST_COUNT");
         }
 
-        const room = await bookingRepository.findRoomById(data.roomId);
+        const room = await bookingRepository.findRoomById(
+            data.roomId,
+        );
 
         if (!room) {
             throw new Error("ROOM_NOT_FOUND");
@@ -42,10 +45,12 @@ export const bookingService = {
             throw new Error("ROOM_ALREADY_BOOKED");
         }
 
-        const millisecondsPerDay = 1000 * 60 * 60 * 24;
+        const millisecondsPerDay =
+            1000 * 60 * 60 * 24;
 
         const nights = Math.ceil(
-            (data.checkOut.getTime() - data.checkIn.getTime()) /
+            (data.checkOut.getTime() -
+                data.checkIn.getTime()) /
                 millisecondsPerDay,
         );
 
@@ -67,6 +72,75 @@ export const bookingService = {
         });
 
         return booking;
+    },
+
+    async updateBookingStatus(
+        bookingId: number,
+        newStatus: "CONFIRMED" | "CANCELLED",
+        userId: number,
+        userRole: string,
+    ) {
+        const booking =
+            await bookingRepository.findBookingById(
+                bookingId,
+            );
+
+        if (!booking) {
+            throw new Error("BOOKING_NOT_FOUND");
+        }
+
+        const isOwnerOrAdmin =
+            userRole === "OWNER" ||
+            userRole === "ADMIN";
+
+        const isBookingOwner =
+            booking.userId === userId;
+
+        /*
+         * The authenticated user must either:
+         * 1. Own the booking, or
+         * 2. Be an OWNER/ADMIN.
+         */
+        if (!isOwnerOrAdmin && !isBookingOwner) {
+            throw new Error("FORBIDDEN");
+        }
+
+        /*
+         * Only OWNER/ADMIN can confirm a booking.
+         *
+         * PENDING -> CONFIRMED
+         */
+        if (newStatus === "CONFIRMED") {
+            if (!isOwnerOrAdmin) {
+                throw new Error("FORBIDDEN");
+            }
+
+            if (booking.status !== "PENDING") {
+                throw new Error(
+                    "INVALID_STATUS_TRANSITION",
+                );
+            }
+        }
+
+        /*
+         * PENDING -> CANCELLED
+         * CONFIRMED -> CANCELLED
+         */
+        if (newStatus === "CANCELLED") {
+            if (
+                booking.status !== "PENDING" &&
+                booking.status !== "CONFIRMED"
+            ) {
+                throw new Error(
+                    "INVALID_STATUS_TRANSITION",
+                );
+            }
+        }
+
+        return bookingRepository.updateBookingStatus(
+            bookingId,
+            newStatus,
+        );
     },
 
     async getBookingById(id: number) {
