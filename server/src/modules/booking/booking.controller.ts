@@ -131,3 +131,74 @@ export async function getBookingById(
         });
     }
 }
+
+export async function updateBookingStatus(
+    req: AuthenticatedRequest,
+    res: Response,
+) {
+    try {
+        const bookingId = Number(req.params.id);
+        const { status } = req.body;
+
+        if (Number.isNaN(bookingId)) {
+            return res.status(400).json({
+                message: "Invalid booking ID",
+            });
+        }
+
+        if (
+            status !== "CONFIRMED" &&
+            status !== "CANCELLED"
+        ) {
+            return res.status(400).json({
+                message: "Invalid booking status",
+            });
+        }
+
+        if (!req.user) {
+            return res.status(401).json({
+                message: "Authentication required",
+            });
+        }
+
+        const booking =
+            await bookingService.updateBookingStatus(
+                bookingId,
+                status,
+                req.user.id,
+                req.user.role,
+            );
+
+        return res.json({
+            message: "Booking status updated successfully",
+            booking,
+        });
+    } catch (error) {
+        console.error(error);
+
+        if (error instanceof Error) {
+            switch (error.message) {
+                case "BOOKING_NOT_FOUND":
+                    return res.status(404).json({
+                        message: "Booking not found",
+                    });
+
+                case "FORBIDDEN":
+                    return res.status(403).json({
+                        message:
+                            "You are not authorized to update this booking",
+                    });
+
+                case "INVALID_STATUS_TRANSITION":
+                    return res.status(409).json({
+                        message:
+                            "Invalid booking status transition",
+                    });
+            }
+        }
+
+        return res.status(500).json({
+            message: "Failed to update booking status",
+        });
+    }
+}

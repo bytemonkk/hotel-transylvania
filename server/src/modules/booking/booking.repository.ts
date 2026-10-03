@@ -1,7 +1,6 @@
 import { prisma } from "../../db/prisma.js";
 
 export const bookingRepository = {
-
     async findRoomById(roomId: number) {
         return prisma.room.findUnique({
             where: {
@@ -13,7 +12,7 @@ export const bookingRepository = {
     async findOverlappingBooking(
         roomId: number,
         checkIn: Date,
-        checkOut: Date
+        checkOut: Date,
     ) {
         return prisma.booking.findFirst({
             where: {
@@ -73,7 +72,7 @@ export const bookingRepository = {
     // Ownership-aware booking lookup
     async findBookingByIdAndUserId(
         id: number,
-        userId: number
+        userId: number,
     ) {
         return prisma.booking.findFirst({
             where: {
@@ -89,6 +88,21 @@ export const bookingRepository = {
                         email: true,
                     },
                 },
+            },
+        });
+    },
+
+    // Update booking status
+    async updateBookingStatus(
+        bookingId: number,
+        status: "PENDING" | "CONFIRMED" | "CANCELLED",
+    ) {
+        return prisma.booking.update({
+            where: {
+                id: bookingId,
+            },
+            data: {
+                status,
             },
         });
     },
