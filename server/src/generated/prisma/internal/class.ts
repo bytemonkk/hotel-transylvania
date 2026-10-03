@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.10.0",
   "engineVersion": "0edf323efd1d98336f3f0a68684b56f689b900d3",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Room {\n  id            Int      @id @default(autoincrement())\n  roomNumber    String   @unique\n  name          String\n  description   String?\n  capacity      Int\n  pricePerNight Decimal\n  status        String   @default(\"AVAILABLE\")\n  createdAt     DateTime @default(now())\n}\n",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Room {\n  id            Int      @id @default(autoincrement())\n  roomNumber    String   @unique\n  name          String\n  description   String?\n  capacity      Int\n  pricePerNight Decimal  @db.Decimal(10, 2)\n  status        String   @default(\"AVAILABLE\")\n  createdAt     DateTime @default(now())\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
