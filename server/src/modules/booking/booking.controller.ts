@@ -1,18 +1,28 @@
 import type { Request, Response } from "express";
 import { bookingService } from "./booking.service.js";
+import type { AuthenticatedRequest } from "../../middleware/auth.middleware.js";
 
-export async function createBooking(req: Request, res: Response) {
+export async function createBooking(
+    req: AuthenticatedRequest,
+    res: Response
+) {
     try {
         const {
-            userId,
             roomId,
             checkIn,
             checkOut,
             guests,
         } = req.body;
 
+        // User must be authenticated
+        if (!req.user) {
+            return res.status(401).json({
+                message: "Authentication required",
+            });
+        }
+
+        // Validate booking input
         if (
-            !userId ||
             !roomId ||
             !checkIn ||
             !checkOut ||
@@ -23,8 +33,10 @@ export async function createBooking(req: Request, res: Response) {
             });
         }
 
+        // userId comes from the authenticated JWT,
+        // NOT from the client request body.
         const booking = await bookingService.createBooking({
-            userId: Number(userId),
+            userId: req.user.id,
             roomId: Number(roomId),
             checkIn: new Date(checkIn),
             checkOut: new Date(checkOut),

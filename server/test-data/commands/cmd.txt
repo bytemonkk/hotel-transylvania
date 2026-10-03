@@ -1,0 +1,17 @@
+curl.exe -X POST http://localhost:5000/api/rooms `
+  -H "Content-Type: application/json" `
+  --data-binary "@server/test-data/room.json"
+
+// Login and get the JWT
+
+curl.exe -X POST http://localhost:5000/api/auth/login `
+  -H "Content-Type: application/json" `
+  --data-binary "@server/test-data/login.json"
+
+
+// Test WITH the token
+
+curl.exe -X POST http://localhost:5000/api/bookings `
+  -H "Content-Type: application/json" `
+  -H "Authorization: Bearer YOUR_TOKEN_HERE" `
+  --data-binary "@server/test-data/booking-3.json"
