@@ -91,7 +91,7 @@ export async function createBooking(
 }
 
 export async function getBookingById(
-    req: Request,
+    req: AuthenticatedRequest,
     res: Response
 ) {
     try {
@@ -103,7 +103,17 @@ export async function getBookingById(
             });
         }
 
-        const booking = await bookingService.getBookingById(id);
+        if (!req.user) {
+            return res.status(401).json({
+                message: "Authentication required",
+            });
+        }
+
+        const booking =
+            await bookingService.getBookingByIdForUser(
+                id,
+                req.user.id
+            );
 
         if (!booking) {
             return res.status(404).json({
@@ -112,6 +122,7 @@ export async function getBookingById(
         }
 
         return res.json(booking);
+
     } catch (error) {
         console.error(error);
 

@@ -11,6 +11,6 @@ const router = Router();
 
 router.post("/", requireAuth, createBooking);
 
-router.get("/:id", getBookingById);
+router.get("/:id", requireAuth, getBookingById);
 
 export default router;
