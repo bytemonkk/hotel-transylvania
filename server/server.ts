@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import roomRoutes from "./src/modules/rooms/room.routes.js";
 import authRoutes from "./src/modules/auth/auth.routes.js";
+import bookingRoutes from "./src/modules/booking/booking.routes.js";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/rooms", roomRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/bookings", bookingRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

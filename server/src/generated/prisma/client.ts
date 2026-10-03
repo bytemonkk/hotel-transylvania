@@ -51,3 +51,8 @@ export type Room = Prisma.RoomModel
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Booking
+ * 
+ */
+export type Booking = Prisma.BookingModel

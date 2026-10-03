@@ -13,6 +13,12 @@ enum UserRole {
   ADMIN
 }
 
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
 model Room {
   id            Int      @id @default(autoincrement())
   roomNumber    String   @unique
@@ -23,6 +29,8 @@ model Room {
   status        String   @default("AVAILABLE")
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
+  bookings      Booking[]
 }
 
 model User {
@@ -33,4 +41,30 @@ model User {
   role         UserRole @default(CUSTOMER)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+
+  bookings     Booking[]
+}
+
+model Booking {
+  id          Int           @id @default(autoincrement())
+
+  userId      Int
+  roomId      Int
+
+  checkIn     DateTime
+  checkOut    DateTime
+  guests      Int
+
+  totalAmount Decimal       @db.Decimal(10, 2)
+
+  status      BookingStatus @default(PENDING)
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  user        User          @relation(fields: [userId], references: [id])
+  room        Room          @relation(fields: [roomId], references: [id])
+
+  @@index([userId])
+  @@index([roomId])
 }
