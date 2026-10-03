@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client"
+  output = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Room {
+  id            Int      @id @default(autoincrement())
+  roomNumber    String   @unique
+  name          String
+  description   String?
+  capacity      Int
+  pricePerNight Decimal @db.Decimal(10, 2)
+  status        String   @default("AVAILABLE")
+  createdAt     DateTime @default(now())
+}

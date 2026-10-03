@@ -1,0 +1,7 @@
+{
+  "roomNumber": "101",
+  "name": "Dracula Suite",
+  "description": "A gothic luxury room inside the castle.",
+  "capacity": 2,
+  "pricePerNight": 5000
+}
