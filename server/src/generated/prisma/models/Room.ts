@@ -47,6 +47,7 @@ export type RoomMinAggregateOutputType = {
   pricePerNight: runtime.Decimal | null
   status: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type RoomMaxAggregateOutputType = {
@@ -58,6 +59,7 @@ export type RoomMaxAggregateOutputType = {
   pricePerNight: runtime.Decimal | null
   status: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type RoomCountAggregateOutputType = {
@@ -69,6 +71,7 @@ export type RoomCountAggregateOutputType = {
   pricePerNight: number
   status: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -94,6 +97,7 @@ export type RoomMinAggregateInputType = {
   pricePerNight?: true
   status?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type RoomMaxAggregateInputType = {
@@ -105,6 +109,7 @@ export type RoomMaxAggregateInputType = {
   pricePerNight?: true
   status?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type RoomCountAggregateInputType = {
@@ -116,6 +121,7 @@ export type RoomCountAggregateInputType = {
   pricePerNight?: true
   status?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -214,6 +220,7 @@ export type RoomGroupByOutputType = {
   pricePerNight: runtime.Decimal
   status: string
   createdAt: Date
+  updatedAt: Date
   _count: RoomCountAggregateOutputType | null
   _avg: RoomAvgAggregateOutputType | null
   _sum: RoomSumAggregateOutputType | null
@@ -248,6 +255,7 @@ export type RoomWhereInput = {
   pricePerNight?: Prisma.DecimalFilter<"Room"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFilter<"Room"> | string
   createdAt?: Prisma.DateTimeFilter<"Room"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Room"> | Date | string
 }
 
 export type RoomOrderByWithRelationInput = {
@@ -259,6 +267,7 @@ export type RoomOrderByWithRelationInput = {
   pricePerNight?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RoomWhereUniqueInput = Prisma.AtLeast<{
@@ -273,6 +282,7 @@ export type RoomWhereUniqueInput = Prisma.AtLeast<{
   pricePerNight?: Prisma.DecimalFilter<"Room"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFilter<"Room"> | string
   createdAt?: Prisma.DateTimeFilter<"Room"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Room"> | Date | string
 }, "id" | "roomNumber">
 
 export type RoomOrderByWithAggregationInput = {
@@ -284,6 +294,7 @@ export type RoomOrderByWithAggregationInput = {
   pricePerNight?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.RoomCountOrderByAggregateInput
   _avg?: Prisma.RoomAvgOrderByAggregateInput
   _max?: Prisma.RoomMaxOrderByAggregateInput
@@ -303,6 +314,7 @@ export type RoomScalarWhereWithAggregatesInput = {
   pricePerNight?: Prisma.DecimalWithAggregatesFilter<"Room"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringWithAggregatesFilter<"Room"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Room"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Room"> | Date | string
 }
 
 export type RoomCreateInput = {
@@ -313,6 +325,7 @@ export type RoomCreateInput = {
   pricePerNight: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RoomUncheckedCreateInput = {
@@ -324,6 +337,7 @@ export type RoomUncheckedCreateInput = {
   pricePerNight: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RoomUpdateInput = {
@@ -334,6 +348,7 @@ export type RoomUpdateInput = {
   pricePerNight?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RoomUncheckedUpdateInput = {
@@ -345,6 +360,7 @@ export type RoomUncheckedUpdateInput = {
   pricePerNight?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RoomCreateManyInput = {
@@ -356,6 +372,7 @@ export type RoomCreateManyInput = {
   pricePerNight: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type RoomUpdateManyMutationInput = {
@@ -366,6 +383,7 @@ export type RoomUpdateManyMutationInput = {
   pricePerNight?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RoomUncheckedUpdateManyInput = {
@@ -377,6 +395,7 @@ export type RoomUncheckedUpdateManyInput = {
   pricePerNight?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type RoomCountOrderByAggregateInput = {
@@ -388,6 +407,7 @@ export type RoomCountOrderByAggregateInput = {
   pricePerNight?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RoomAvgOrderByAggregateInput = {
@@ -405,6 +425,7 @@ export type RoomMaxOrderByAggregateInput = {
   pricePerNight?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RoomMinOrderByAggregateInput = {
@@ -416,6 +437,7 @@ export type RoomMinOrderByAggregateInput = {
   pricePerNight?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type RoomSumOrderByAggregateInput = {
@@ -463,6 +485,7 @@ export type RoomSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   pricePerNight?: boolean
   status?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["room"]>
 
 export type RoomSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -474,6 +497,7 @@ export type RoomSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   pricePerNight?: boolean
   status?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["room"]>
 
 export type RoomSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -485,6 +509,7 @@ export type RoomSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   pricePerNight?: boolean
   status?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["room"]>
 
 export type RoomSelectScalar = {
@@ -496,9 +521,10 @@ export type RoomSelectScalar = {
   pricePerNight?: boolean
   status?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type RoomOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "roomNumber" | "name" | "description" | "capacity" | "pricePerNight" | "status" | "createdAt", ExtArgs["result"]["room"]>
+export type RoomOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "roomNumber" | "name" | "description" | "capacity" | "pricePerNight" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["room"]>
 
 export type $RoomPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Room"
@@ -512,6 +538,7 @@ export type $RoomPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     pricePerNight: runtime.Decimal
     status: string
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["room"]>
   composites: {}
 }
@@ -943,6 +970,7 @@ export interface RoomFieldRefs {
   readonly pricePerNight: Prisma.FieldRef<"Room", 'Decimal'>
   readonly status: Prisma.FieldRef<"Room", 'String'>
   readonly createdAt: Prisma.FieldRef<"Room", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Room", 'DateTime'>
 }
     
 

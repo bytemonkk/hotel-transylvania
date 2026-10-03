@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import roomRoutes from "./src/modules/rooms/room.routes.js";
+import authRoutes from "./src/modules/auth/auth.routes.js";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get("/api/health", (req, res) => {
 });
 
 app.use("/api/rooms", roomRoutes);
+app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
