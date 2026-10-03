@@ -1,5 +1,6 @@
 import { Worker } from "bullmq";
 import { prisma } from "../db/prisma.js";
+import { sendBookingConfirmationEmail } from "../services/mail.service.js";
 
 const connection = {
     host: process.env.REDIS_HOST || "localhost",
@@ -43,6 +44,20 @@ const worker = new Worker(
             console.log("Check-out:", booking.checkOut);
             console.log("Guests:", booking.guests);
             console.log("Total:", booking.totalAmount);
+
+            await sendBookingConfirmationEmail({
+                to: booking.user.email,
+                customerName: booking.user.name,
+                bookingId: booking.id,
+                roomName: booking.room.name,
+                roomNumber: booking.room.roomNumber,
+                checkIn: booking.checkIn,
+                checkOut: booking.checkOut,
+                guests: booking.guests,
+                totalAmount: booking.totalAmount.toString(),
+            });
+
+            console.log("📨 Booking confirmation email sent");
         }
 
         console.log("Email job processed");
@@ -59,7 +74,7 @@ worker.on("completed", (job) => {
 worker.on("failed", (job, error) => {
     console.error(
         `Job ${job?.id} failed:`,
-        error.message
+        error.message,
     );
 });
 
