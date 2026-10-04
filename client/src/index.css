@@ -1,111 +1,925 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap");
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+/* =========================================================
+   RESET
+========================================================= */
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
 body {
-  margin: 0;
+  background: #07070b;
+  color: #f4f0e8;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+button {
+  font-family: inherit;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+
+/* =========================================================
+   HOME
+========================================================= */
+
+.home {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 72% 25%,
+      rgba(77, 53, 108, 0.16),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 20% 65%,
+      rgba(50, 34, 75, 0.12),
+      transparent 30%
+    ),
+    #07070b;
+}
+
+
+/* =========================================================
+   CINEMATIC GRID
+========================================================= */
+
+.home::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 64px 64px;
+
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    rgba(0, 0, 0, 0.8) 55%,
+    transparent 100%
+  );
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   AMBIENT LIGHT
+========================================================= */
+
+.ambient {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(90px);
+}
+
+.ambient-one {
+  width: 320px;
+  height: 320px;
+
+  top: 20%;
+  left: 12%;
+
+  background: rgba(74, 42, 105, 0.09);
+
+  animation: ambientFloat 9s ease-in-out infinite;
+}
+
+.ambient-two {
+  width: 280px;
+  height: 280px;
+
+  bottom: 15%;
+  right: 18%;
+
+  background: rgba(55, 39, 90, 0.08);
+
+  animation: ambientFloat 12s ease-in-out infinite reverse;
+}
+
+@keyframes ambientFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -18px, 0);
   }
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+  position: relative;
+  z-index: 20;
+
+  width: min(1200px, calc(100% - 48px));
+  margin: auto;
+
+  height: 82px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
 
-code {
+/* HOTEL TRANSYLVANIA BRAND */
+
+.brand {
+  font-family: "Cinzel", serif;
+
   font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  font-weight: 500;
+
+  letter-spacing: 3px;
+
+  color: #f4f0e8;
+
+  white-space: nowrap;
 }
+
+
+/* NAV LINKS */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 42px;
+
+  font-size: 10px;
+  letter-spacing: 2px;
+
+  color: rgba(244, 240, 232, 0.55);
+}
+
+.nav-links span {
+  position: relative;
+  cursor: pointer;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.nav-links span:hover {
+  color: #f4f0e8;
+  transform: translateY(-1px);
+}
+
+.nav-links span::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  bottom: -9px;
+
+  width: 0;
+  height: 1px;
+
+  background: #bca7d9;
+
+  transform: translateX(-50%);
+
+  transition: width 0.3s ease;
+}
+
+.nav-links span:hover::after {
+  width: 100%;
+}
+
+
+/* NAV BUTTON */
+
+.nav-button {
+  padding: 11px 20px;
+
+  border-radius: 999px;
+
+  border: 1px solid rgba(255, 255, 255, 0.16);
+
+  background: rgba(255, 255, 255, 0.025);
+
+  color: #f4f0e8;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 1.8px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.nav-button:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(190, 166, 220, 0.5);
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   MOON
+========================================================= */
+
+.moon {
+  position: absolute;
+
+  z-index: 1;
+
+  width: 250px;
+  height: 250px;
+
+  top: 125px;
+  right: -85px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 38% 35%,
+      rgba(244, 241, 248, 0.19),
+      rgba(201, 195, 214, 0.08) 48%,
+      rgba(100, 90, 120, 0.025) 75%
+    );
+
+  box-shadow:
+    0 0 70px rgba(180, 160, 210, 0.08),
+    0 0 140px rgba(130, 100, 170, 0.035);
+
+  opacity: 0.65;
+
+  animation: moonFloat 10s ease-in-out infinite;
+}
+
+.moon-shadow {
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 72% 25%,
+      transparent 0 18%,
+      rgba(0, 0, 0, 0.12) 40%,
+      rgba(0, 0, 0, 0.32) 80%
+    );
+}
+
+@keyframes moonFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+  position: relative;
+  z-index: 5;
+
+  width: min(1200px, calc(100% - 48px));
+  min-height: 700px;
+
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.hero-content {
+  position: relative;
+  z-index: 8;
+
+  width: 620px;
+
+  padding-top: 30px;
+}
+
+
+/* ESTABLISHED */
+
+.established {
+  margin-bottom: 20px;
+
+  font-family: "Cinzel", serif;
+
+  font-size: 10px;
+
+  letter-spacing: 6px;
+
+  color: rgba(244, 240, 232, 0.45);
+}
+
+
+/* QUOTE / TAGLINE */
+
+.tagline {
+  margin-bottom: 18px;
+
+  font-size: 11px;
+
+  letter-spacing: 5px;
+
+  color: #b9a5cf;
+}
+
+
+/* =========================================================
+   MAIN TITLE
+========================================================= */
+
+.hero h1 {
+  font-family: "Cinzel", serif;
+
+  font-size: clamp(64px, 8vw, 112px);
+
+  font-weight: 500;
+
+  line-height: 0.9;
+
+  letter-spacing: 2px;
+
+  color: #f6f2e9;
+
+  text-shadow:
+    0 0 40px rgba(255, 255, 255, 0.04);
+}
+
+.hero h1 span {
+  display: block;
+
+  margin-top: 18px;
+
+  font-size: 0.48em;
+
+  letter-spacing: 12px;
+
+  color: #c6b8d2;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.hero-description {
+  max-width: 520px;
+
+  margin-top: 34px;
+
+  color: rgba(244, 240, 232, 0.55);
+
+  font-size: 14px;
+
+  line-height: 1.9;
+
+  letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+
+  margin-top: 38px;
+}
+
+.primary-button,
+.secondary-button {
+  height: 44px;
+
+  padding: 0 22px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 1.8px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.primary-button {
+  border: 1px solid rgba(191, 164, 219, 0.55);
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(115, 77, 147, 0.24),
+      rgba(60, 38, 84, 0.16)
+    );
+
+  color: #f5f1e8;
+
+  box-shadow:
+    0 0 30px rgba(118, 76, 153, 0.08);
+}
+
+.primary-button span {
+  margin-left: 12px;
+}
+
+.primary-button:hover {
+  border-color: rgba(220, 200, 240, 0.8);
+
+  box-shadow:
+    0 0 35px rgba(130, 85, 170, 0.14);
+}
+
+.secondary-button {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background: transparent;
+
+  color: rgba(244, 240, 232, 0.55);
+}
+
+.secondary-button:hover {
+  color: #f4f0e8;
+
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+
+/* =========================================================
+   CASTLE EMBLEM
+========================================================= */
+
+.castle-emblem {
+  position: absolute;
+
+  z-index: 4;
+
+  right: 100px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 230px;
+  height: 230px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(185, 161, 215, 0.12);
+
+  box-shadow:
+    0 0 0 28px rgba(160, 130, 190, 0.015),
+    0 0 0 55px rgba(160, 130, 190, 0.012);
+}
+
+.castle-emblem::before,
+.castle-emblem::after {
+  content: "";
+
+  position: absolute;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(185, 161, 215, 0.08);
+}
+
+.castle-emblem::before {
+  inset: 20px;
+}
+
+.castle-emblem::after {
+  inset: 43px;
+}
+
+
+/* actual symbol */
+
+.castle-symbol {
+  position: relative;
+
+  font-size: 112px;
+
+  font-family: Georgia, serif;
+
+  color: rgba(245, 240, 230, 0.9);
+
+  filter:
+    drop-shadow(0 0 18px rgba(200, 180, 220, 0.12));
+
+  transition:
+    transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.6s ease;
+}
+
+.castle-emblem:hover .castle-symbol {
+  transform: translateY(-5px) scale(1.04);
+
+  filter:
+    drop-shadow(0 0 28px rgba(200, 180, 220, 0.22));
+}
+
+
+/* =========================================================
+   RESIDENTS
+========================================================= */
+
+.residents {
+  position: relative;
+  z-index: 8;
+
+  width: min(1200px, calc(100% - 48px));
+
+  margin: 40px auto 0;
+
+  padding-bottom: 130px;
+}
+
+.section-label {
+  margin-bottom: 18px;
+
+  font-size: 10px;
+
+  letter-spacing: 5px;
+
+  color: rgba(190, 166, 215, 0.6);
+}
+
+.residents h2 {
+  font-family: "Cinzel", serif;
+
+  font-size: clamp(36px, 5vw, 58px);
+
+  font-weight: 400;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 45px;
+}
+
+
+/* =========================================================
+   RESIDENT GRID
+========================================================= */
+
+.residents-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 14px;
+}
+
+.resident-card {
+  position: relative;
+
+  min-height: 260px;
+
+  padding: 26px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.035),
+      rgba(255, 255, 255, 0.008)
+    );
+
+  overflow: hidden;
+
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.4s ease,
+    background 0.4s ease;
+}
+
+.resident-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 140px;
+  height: 140px;
+
+  right: -70px;
+  top: -70px;
+
+  border-radius: 50%;
+
+  background: rgba(120, 80, 160, 0.09);
+
+  filter: blur(20px);
+
+  transition: transform 0.6s ease;
+}
+
+.resident-card:hover {
+  transform: translateY(-7px);
+
+  border-color: rgba(188, 160, 215, 0.28);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(120, 85, 150, 0.09),
+      rgba(255, 255, 255, 0.015)
+    );
+}
+
+.resident-card:hover::before {
+  transform: scale(1.6);
+}
+
+.resident-number {
+  display: block;
+
+  font-size: 9px;
+
+  letter-spacing: 3px;
+
+  color: rgba(244, 240, 232, 0.3);
+
+  margin-bottom: 32px;
+}
+
+.resident-role {
+  display: block;
+
+  font-size: 9px;
+
+  letter-spacing: 3px;
+
+  color: rgba(190, 166, 215, 0.55);
+
+  margin-bottom: 8px;
+}
+
+.resident-card h3 {
+  position: relative;
+
+  font-family: "Cinzel", serif;
+
+  font-size: 26px;
+
+  font-weight: 500;
+}
+
+.resident-card p {
+  position: relative;
+
+  margin-top: 14px;
+
+  font-size: 12px;
+
+  line-height: 1.7;
+
+  color: rgba(244, 240, 232, 0.45);
+}
+
+
+/* =========================================================
+   CLOSING QUOTE
+========================================================= */
+
+.closing {
+  position: relative;
+  z-index: 8;
+
+  width: min(1200px, calc(100% - 48px));
+
+  margin: auto;
+
+  padding:
+    80px 0
+    150px;
+}
+
+.closing-line {
+  width: 45px;
+  height: 1px;
+
+  background: rgba(190, 166, 215, 0.45);
+
+  margin-bottom: 25px;
+}
+
+.closing p {
+  font-size: 10px;
+
+  letter-spacing: 5px;
+
+  color: rgba(190, 166, 215, 0.55);
+
+  margin-bottom: 20px;
+}
+
+.closing h2 {
+  font-family: "Cinzel", serif;
+
+  font-size: clamp(32px, 5vw, 62px);
+
+  line-height: 1.15;
+
+  font-weight: 400;
+
+  letter-spacing: 1px;
+
+  color: #f4f0e8;
+}
+
+.closing h2 em {
+  font-family: "Cinzel", serif;
+
+  font-style: normal;
+
+  font-weight: 400;
+
+  color: #f4f0e8;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .nav-links {
+    display: none;
+  }
+
+  .hero {
+    min-height: 650px;
+  }
+
+  .castle-emblem {
+    right: 20px;
+    opacity: 0.45;
+  }
+
+  .residents-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+@media (max-width: 700px) {
+
+  .navbar,
+  .hero,
+  .residents,
+  .closing {
+    width: min(100% - 32px, 1200px);
+  }
+
+  .navbar {
+    height: 70px;
+  }
+
+  .brand {
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  .nav-button {
+    padding: 9px 14px;
+  }
+
+  .hero {
+    min-height: 680px;
+    align-items: flex-start;
+    padding-top: 100px;
+  }
+
+  .hero-content {
+    width: 100%;
+  }
+
+  .hero h1 {
+    font-size: clamp(52px, 16vw, 82px);
+  }
+
+  .hero h1 span {
+    letter-spacing: 6px;
+  }
+
+  .hero-description {
+    max-width: 100%;
+  }
+
+  .castle-emblem {
+    width: 150px;
+    height: 150px;
+
+    right: -30px;
+    top: 58%;
+
+    opacity: 0.22;
+  }
+
+  .castle-symbol {
+    font-size: 72px;
+  }
+
+  .moon {
+    width: 180px;
+    height: 180px;
+
+    top: 90px;
+    right: -70px;
+
+    opacity: 0.4;
+  }
+
+  .residents-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resident-card {
+    min-height: 220px;
+  }
+
+  .hero-actions {
+    flex-wrap: wrap;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
